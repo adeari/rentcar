@@ -1,5 +1,23 @@
 package klass
 
+import (
+  "fmt"
+  _ "github.com/go-sql-driver/mysql"
+  "database/sql"
+)
+
 const (
     PORT     = "8084"
+    DB_USER     = "ade"
+    DB_PASSWORD = "1234"
+    DB_NAME     = "ordersewamobil"
+    DB_HOST     = "localhost"
 )
+
+func connect() *sql.DB {
+	db, err := sql.Open("mysql", DB_USER+":"+DB_PASSWORD+"@tcp("+DB_HOST+":3306)/"+DB_NAME)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return db
+}
