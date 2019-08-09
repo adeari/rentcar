@@ -33,8 +33,8 @@ func indexawal(c echo.Context) error {
 func main() {
   e := echo.New()
   
-  e.Use(middleware.Logger())
-  e.Use(middleware.Recover())
+  //e.Use(middleware.Logger())
+  //e.Use(middleware.Recover())
    
   e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
     AllowOrigins: []string{"http://192.168.1.64:8082", "http://suryasuburrentcar.com"},
