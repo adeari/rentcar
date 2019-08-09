@@ -37,7 +37,7 @@ func main() {
   e.Use(middleware.Recover())
    
   e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-    AllowOrigins: []string{"*"},
+    AllowOrigins: []string{"http://192.168.1.64:8082", "http://suryasuburrentcar.com"},
     AllowMethods: []string{echo.GET, echo.PUT, echo.POST, echo.DELETE},
     AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
   }))
