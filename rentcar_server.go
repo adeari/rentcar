@@ -1,12 +1,13 @@
 package main
 
 import (
-	"net/http"
-    "github.com/labstack/echo/v4"
-    "github.com/labstack/echo/v4/middleware"
-	"html/template"
-    "io"
-    "rentcar/klass"
+  "github.com/labstack/echo/v4"
+  "github.com/labstack/echo/v4/middleware"
+  "html/template"
+  "io"
+  "rentcar/klass"
+  "github.com/gorilla/sessions"
+  "github.com/labstack/echo-contrib/session"
 )
 
 type TemplateRenderer struct {
@@ -24,20 +25,17 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-func indexawal(c echo.Context) error {
-    return c.Render(http.StatusOK, "index.html", map[string]interface{}{})
-}
 
 
 
 func main() {
   e := echo.New()
-  
+  e.Use(session.Middleware(sessions.NewCookieStore([]byte("rahasia"))))
   //e.Use(middleware.Logger())
   //e.Use(middleware.Recover())
    
   e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-    AllowOrigins: []string{"http://192.168.1.64:8082", "http://suryasuburrentcar.com"},
+    AllowOrigins: []string{"http://192.168.1.64:8082","http://localhost:8084", "http://suryasuburrentcar.com"},
     AllowMethods: []string{echo.GET, echo.PUT, echo.POST, echo.DELETE},
     AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
   }))
@@ -49,9 +47,16 @@ func main() {
   }
   e.Renderer = renderer
   
-  e.GET("/", indexawal)
+  e.GET("/", klass.Indexawal)
   e.POST("kirim", klass.Kirim)
   e.POST("coba", klass.Coba)
+  e.GET("data-order", klass.DataOrder)
+  e.GET("get-pdf", klass.Pdf)
+  e.POST("userlogin", klass.Userlogin)
+  
+  e.GET("admin", klass.Indexawal)
+  e.GET("order", klass.IndexAdmin)
+  e.GET("gooutya", klass.LogOut)
   
   e.Logger.Fatal(e.Start(":"+klass.PORT))
 } 

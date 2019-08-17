@@ -15,7 +15,7 @@ const (
 )
 
 func connect() *sql.DB {
-	db, err := sql.Open("mysql", DB_USER+":"+DB_PASSWORD+"@tcp("+DB_HOST+":3306)/"+DB_NAME)
+	db, err := sql.Open("mysql", DB_USER+":"+DB_PASSWORD+"@tcp("+DB_HOST+":3306)/"+DB_NAME+"?parseTime=true")
 	if err != nil {
 		fmt.Println(err)
 	}
