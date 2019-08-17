@@ -6,7 +6,6 @@ import (
   _ "github.com/go-sql-driver/mysql"
   "github.com/gorilla/sessions"
   "github.com/labstack/echo-contrib/session"
-  "fmt"
 )
 
 func Userlogin(c echo.Context) error {
@@ -43,7 +42,6 @@ func Indexawal(c echo.Context) error {
 
 func IndexAdmin(c echo.Context) error {
   sess, _ := session.Get("session", c)
-  fmt.Println(sess.Values["id"])
   if sess.Values["id"] == -1 {
     return c.Redirect(http.StatusSeeOther, "admin")
   }
@@ -51,11 +49,8 @@ func IndexAdmin(c echo.Context) error {
 }
 
 func LogOut(c echo.Context) error {
-  fmt.Println("out ")
   sess, _ := session.Get("session", c)
   sess.Values["id"] = -1
   sess.Save(c.Request(), c.Response())
-  fmt.Println("out ")
-  fmt.Println(sess.Values["id"])
   return Indexawal(c)
 }
