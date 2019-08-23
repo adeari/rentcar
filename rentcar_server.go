@@ -50,12 +50,19 @@ func main() {
   e.GET("/", klass.Indexawal)
   e.POST("kirim", klass.Kirim)
   e.POST("coba", klass.Coba)
-  e.GET("data-order", klass.DataOrder)
   e.GET("get-pdf", klass.Pdf)
   e.POST("userlogin", klass.Userlogin)
+  e.POST("update-password", klass.UpdatePassword)
+  e.POST("add-user", klass.AddUser)
+  e.POST("delete-an-user", klass.DeleteAnUser)
+  
+  apiadmin := e.Group("api/")  
+  apiadmin.GET("data-order", klass.DataOrder)
+  apiadmin.GET("data-users", klass.DataUsers)
   
   e.GET("admin", klass.Indexawal)
   e.GET("order", klass.IndexAdmin)
+  e.GET("usernya", klass.IndexAdmin)
   e.GET("gooutya", klass.LogOut)
   
   e.Logger.Fatal(e.Start(":"+klass.PORT))

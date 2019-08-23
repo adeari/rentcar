@@ -7,7 +7,7 @@ import (
   "time"
   "github.com/jung-kurt/gofpdf"
   "math/rand"
-  //"fmt"
+  "github.com/labstack/echo-contrib/session"
 )
 
 func order(c echo.Context) error {
@@ -28,6 +28,10 @@ type Order struct {
 }
 
 func DataOrder(c echo.Context) error {
+  sess, _ := session.Get("session", c)
+  if sess.Values["id"] == -1 {
+    return c.JSON(http.StatusOK, nil)
+  }  
   db := connect()
   defer db.Close()
   

@@ -54,3 +54,45 @@ func LogOut(c echo.Context) error {
   sess.Save(c.Request(), c.Response())
   return Indexawal(c)
 }
+
+func UpdatePassword(c echo.Context) error {
+  sess, _ := session.Get("session", c)
+  if sess.Values["id"] == -1 {
+    return c.JSON(http.StatusOK, nil)
+  }
+  
+  db := connect()
+  defer db.Close()
+  
+  db.Exec("update tb_user set passwd = ? where id = ?", c.FormValue("passwd"), c.FormValue("id"))
+  msg := &Message{Msg:"", Status:true}
+  return c.JSON(http.StatusOK, msg)
+}
+
+func AddUser(c echo.Context) error {
+  sess, _ := session.Get("session", c)
+  if sess.Values["id"] == -1 {
+    return c.JSON(http.StatusOK, nil)
+  }
+  
+  db := connect()
+  defer db.Close()
+  
+  db.Exec("insert into tb_user (username, passwd, role) values (?,?,'Admin')", c.FormValue("username"), c.FormValue("passwd"))
+  msg := &Message{Msg:"", Status:true}
+  return c.JSON(http.StatusOK, msg)
+}
+
+func DeleteAnUser(c echo.Context) error {
+  sess, _ := session.Get("session", c)
+  if sess.Values["id"] == -1 {
+    return c.JSON(http.StatusOK, nil)
+  }
+  
+  db := connect()
+  defer db.Close()
+  
+  db.Exec("delete from tb_user where id = ?", c.FormValue("id"))
+  msg := &Message{Msg:"", Status:true}
+  return c.JSON(http.StatusOK, msg)
+}
