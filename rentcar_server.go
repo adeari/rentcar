@@ -25,9 +25,6 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-
-
-
 func main() {
   e := echo.New()
   e.Use(session.Middleware(sessions.NewCookieStore([]byte("rahasia"))))
