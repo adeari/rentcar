@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.864587780fec5642e0a28d897e8b2b06.js"
+  "/precache-manifest.cbf66e444f168436b0d61c661e13f6c7.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "sewamobil"});
